@@ -1,0 +1,267 @@
+﻿/* ================================================
+   BRAWLHALLA - Legend Selector
+   Versión adaptada sin agente secreto
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Rajdhani:wght@400;500;600&display=swap');
+
+/* ── Root Variables ── */
+:root {
+    --bg-deep: #0a0c14;
+    --bg-card: #111520;
+    --gold: #e8b84b;
+    --gold-light: #f5d47a;
+    --gold-dark: #a07820;
+    --text-primary: #f0e6cc;
+    --border-gold: rgba(232, 184, 75, 0.35);
+    --shadow-gold: 0 0 18px rgba(232, 184, 75, 0.25);
+    --radius: 8px;
+}
+
+/* ── Page Background ── */
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--bg-deep);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-primary);
+}
+
+/* ── Title ── */
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin: 2rem 0 1.5rem;
+    letter-spacing: 0.08em;
+    background: linear-gradient( 135deg, var(--gold-light), var(--gold), var(--gold-dark) );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(232, 184, 75, 0.5));
+}
+
+    h1::before {
+        content: '⚔ ';
+    }
+
+    h1::after {
+        content: ' ⚔';
+    }
+
+/* ── Grid ── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    max-width: 960px;
+    margin: 0 auto 2rem;
+    padding: 0 1.5rem;
+}
+
+/* ── Agent Card ── */
+.agent {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    filter: brightness(1) saturate(1); /* color completo por defecto */
+    transition: all 0.25s ease;
+}
+
+    /* Cuando está clicado → se pone gris */
+    .agent.black {
+        filter: brightness(0);
+        border: 3px solid #000;
+        box-shadow: none;
+        opacity: 1;
+    }
+
+    .agent:hover:not(.black) {
+        transform: translateY(-6px) scale(1.06);
+        border-color: var(--gold);
+        box-shadow: var(--shadow-gold);
+        filter: brightness(1.1);
+    }
+
+
+    .agent.selected {
+        filter: grayscale(0%) brightness(1); /* color completo */
+        border: 3px solid #c026d3; /* borde morado como en tu ejemplo */
+        box-shadow: 0 0 15px rgba(192, 38, 211, 0.5); /* glow opcional */
+    }
+
+
+    /* Clicked (gris) */
+    .agent.clicked {
+        filter: grayscale(100%);
+        opacity: 0.45;
+        border: 4px solid red;
+    }
+
+/* ── Reset Button ── */
+button {
+    display: block;
+    margin: 0 auto 3rem;
+    padding: 0.75rem 2.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg-deep);
+    background: linear-gradient( 135deg, var(--gold-light), var(--gold), var(--gold-dark) );
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(232, 184, 75, 0.4);
+}
+
+
+
+    /* Hover button */
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(232, 184, 75, 0.6);
+    }
+
+/* Responsive */
+@media (max-width: 600px) {
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 8px;
+        padding: 0 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Layout principal: izquierda + derecha */
+.game-layout {
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+    align-items: flex-start;
+}
+
+/* Panel izquierdo - personaje secreto */
+.secret-panel {
+    flex: 0 0 260px;
+    text-align: center;
+    background: var(--bg-card);
+    border: 2px solid var(--border-gold);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-gold);
+}
+
+.secret-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
+.secret-img-large {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid var(--gold);
+    margin-bottom: 0.75rem;
+}
+
+.secret-panel h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold-light);
+    text-transform: capitalize;
+    margin: 0 0 1rem;
+}
+
+.secret-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+    .secret-actions button {
+        margin: 0;
+        width: 100%;
+    }
+
+/* Panel derecho - grilla */
+.board-panel {
+    flex: 1;
+}
+
+.board-label {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.game-grid {
+    max-width: none;
+    grid-template-columns: repeat(6, 1fr); /* como la imagen de Valorant */
+}
+
+/* Setup */
+.setup-panel {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.setup-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+    .setup-actions button {
+        margin: 0;
+    }
+
+.secret-preview {
+    margin-bottom: 1.5rem;
+}
+
+.secret-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    border: 3px solid var(--gold);
+    object-fit: cover;
+}
+
+.hint {
+    opacity: 0.7;
+    margin-bottom: 1rem;
+}
+
+/* Responsive: en móvil, uno encima del otro */
+@media (max-width: 768px) {
+    .game-layout {
+        flex-direction: column;
+    }
+
+    .secret-panel {
+        flex: none;
+        width: 100%;
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

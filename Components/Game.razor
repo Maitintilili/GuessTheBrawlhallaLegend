@@ -1,0 +1,135 @@
+﻿@page "/"
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@rendermode InteractiveServer
+@inject AgentService AgentService
+
+<h1>Guess the Brawlhalla legend</h1>
+
+@if (phase == GamePhase.Setup)
+{
+    <div class="setup-panel">
+        <p>Elige tu personaje secreto:</p>
+
+        <div class="setup-actions">
+            <button @onclick="PickRandomSecret">Aleatorio</button>
+            <button @onclick="StartGame" disabled="@(secretAgent is null)">Empezar</button>
+        </div>
+
+        @if (secretAgent is not null)
+        {
+            <div class="secret-preview">
+                <img src="@secretAgent.Image" alt="@secretAgent.Name" class="secret-img" />
+                <p>Tu personaje: <strong>@secretAgent.Name</strong></p>
+            </div>
+        }
+
+        <p class="hint">O haz clic en un personaje de la grilla:</p>
+        <div class="grid setup-grid">
+            @foreach (var agent in agents)
+            {
+                <img src="@agent.Image"
+                     class="agent @(secretAgent?.Name == agent.Name ? "selected" : "")"
+                     title="@agent.Name"
+                     @onclick="() => SelectSecret(agent)"
+                     @key="agent.Name" />
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="game-layout">
+        <!-- Panel izquierdo: solo ve el jugador con el secreto -->
+        <aside class="secret-panel">
+            <p class="secret-label">Tu personaje secreto:</p>
+            <img src="@secretAgent!.Image"
+                 alt="@secretAgent.Name"
+                 class="secret-img-large" />
+            <h2>@secretAgent.Name</h2>
+
+            <div class="secret-actions">
+                <button @onclick="NewRound">Nuevo juego</button>
+                <button @onclick="ClearDiscards">Limpiar descartes</button>
+            </div>
+        </aside>
+
+        <!-- Panel derecho: el otro jugador descarta aquí -->
+        <section class="board-panel">
+            <p class="board-label">Descarta personajes:</p>
+            <div class="grid game-grid">
+                @foreach (var agent in agents)
+                {
+                    <img src="@agent.Image"
+                         class="@GetAgentClass(agent)"
+                         title="@agent.Name"
+                         @onclick="() => DiscardAgent(agent)"
+                         @key="agent.Name" />
+                }
+            </div>
+            <p>Descartados: @discardedAgents.Count</p>
+        </section>
+    </div>
+}
+
+@code {
+    enum GamePhase { Setup, Playing }
+
+    List<Agent> agents = new();
+    HashSet<string> discardedAgents = new();
+    Agent? secretAgent;
+    GamePhase phase = GamePhase.Setup;
+    Random random = new();
+
+    protected override void OnInitialized()
+    {
+        agents = AgentService.GetAgents();
+    }
+
+    void PickRandomSecret()
+    {
+        secretAgent = agents[random.Next(agents.Count)];
+    }
+
+    void SelectSecret(Agent agent)
+    {
+        secretAgent = agent;
+    }
+
+    void StartGame()
+    {
+        if (secretAgent is null) return;
+        discardedAgents.Clear();
+        phase = GamePhase.Playing;
+    }
+
+    void DiscardAgent(Agent agent)
+    {
+        // Alterna: si ya estaba descartado, lo quita (vuelve a color normal);
+        // si no estaba descartado, lo agrega (se pone en negro).
+        if (discardedAgents.Contains(agent.Name))
+        {
+            discardedAgents.Remove(agent.Name);
+        }
+        else
+        {
+            discardedAgents.Add(agent.Name);
+        }
+    }
+
+    string GetAgentClass(Agent agent)
+    {
+        return discardedAgents.Contains(agent.Name) ? "agent black" : "agent";
+    }
+
+    void ClearDiscards()
+    {
+        discardedAgents.Clear();
+    }
+
+    void NewRound()
+    {
+        discardedAgents.Clear();
+        secretAgent = null;
+        phase = GamePhase.Setup;
+    }
+}

@@ -1,0 +1,38 @@
+@* ============================================================
+   Galeria.razor
+   Página de ejemplo (ruta /galeria) que muestra las fotos de
+   una lista de agentes usando el componente FotoFlip.
+   ============================================================ *@
+@page "/Galeria"
+@rendermode InteractiveServer
+@inject AgentService AgentService
+
+<PageTitle>Galería con efecto Flip</PageTitle>
+
+<h1>Galería de agentes</h1>
+<p>Haz clic sobre cualquier foto para voltearla y verla en blanco y negro.</p>
+
+<div class="galeria">
+    @foreach (var agente in Agentes)
+    {
+        <FotoFlip UrlImagen="@agente.Image" TextoAlternativo="@agente.Name" />
+    }
+</div>
+
+<style>
+    .galeria {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+</style>
+
+@code {
+    private List<Agent> Agentes = new();
+
+    protected override void OnInitialized()
+    {
+        Agentes = AgentService.GetAgents();
+    }
+}

@@ -1,0 +1,65 @@
+@* ============================================================
+   FotoFlip.razor
+   Al hacer clic sobre la foto, esta se voltea y se pone en
+   blanco y negro. Un segundo clic la regresa a la normalidad.
+   ============================================================ *@
+
+<div class="foto-contenedor @(estaVolteada ? "volteada" : "")" @onclick="AlternarEstado">
+    <div class="foto-cara">
+        <img src="@UrlImagen" alt="@TextoAlternativo" class="@(estaVolteada ? "en-negro" : "")" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string UrlImagen { get; set; } = "";
+
+    [Parameter]
+    public string TextoAlternativo { get; set; } = "Foto";
+
+    private bool estaVolteada = false;
+
+    private void AlternarEstado()
+    {
+        estaVolteada = !estaVolteada;
+    }
+}
+
+<style>
+    .foto-contenedor {
+        width: 220px;
+        height: 220px;
+        margin: 12px;
+        display: inline-block;
+        cursor: pointer;
+        perspective: 1000px;
+    }
+
+    .foto-cara {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        transition: transform 0.6s ease;
+        transform-style: preserve-3d;
+        backface-visibility: hidden; /* evita el efecto espejo raro al girar */
+    }
+
+    .foto-contenedor.volteada .foto-cara {
+        transform: rotateY(180deg);
+    }
+
+    .foto-cara img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+        display: block;
+        transition: filter 0.6s ease !important;
+        filter: grayscale(0%) !important;
+    }
+
+    .foto-cara img.en-negro {
+        filter: grayscale(100%) brightness(0.4) !important;
+    }
+</style>

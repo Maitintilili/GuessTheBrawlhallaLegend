@@ -1,0 +1,16 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+
+## Archivos de NuGet generados localmente (no hacen falta en el repo)
+project.assets.json
+project.nuget.cache
+*.nuget.g.props
+*.nuget.g.targets
+*.nuget.dgspec.json
+
+## Configuración local
+appsettings.Development.json
+launchSettings.json
