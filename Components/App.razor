@@ -1,10 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <HeadOutlet />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9390617430289246"
+            crossorigin="anonymous"></script>
+
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
 </head>
 <body>
     <Router AppAssembly="@typeof(Program).Assembly">

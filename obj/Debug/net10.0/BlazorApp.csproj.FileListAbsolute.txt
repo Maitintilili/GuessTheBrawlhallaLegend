@@ -274,3 +274,4 @@ C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\obj\Debug\net10.0\ref\BlazorAp
 C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\obj\Debug\net10.0\compressed\2tgq8u2sk8-{0}-sxwxwzv4dm-sxwxwzv4dm.gz
 C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\obj\Debug\net10.0\compressed\0txged01c1-{0}-ne14ti1q68-ne14ti1q68.gz
 C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\obj\Debug\net10.0\compressed\e2p7e3doxt-{0}-ig5xotzpx5-ig5xotzpx5.gz
+C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\obj\Debug\net10.0\BlazorApp.sourcelink.json

@@ -71,6 +71,6 @@ wwwroot\images\agents\zariel.png
 wwwroot\images\agents\zuva.png
 C:\Users\Luilton\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.9\build\..\_framework\blazor.web.js
 C:\Users\Luilton\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.9\build\..\_framework\blazor.server.js
-C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\wwwroot\css\site.css
-C:\Users\Luilton\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.9\_framework\blazor.web.js
 C:\Users\Luilton\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.9\_framework\blazor.server.js
+C:\Users\Luilton\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.9\_framework\blazor.web.js
+C:\Users\Luilton\source\repos\BlazorApp\BlazorApp\wwwroot\css\site.css
